@@ -62,7 +62,7 @@ function login_user(req,res){
     const hashed_password = CryptoJS.SHA256(password).toString();
     let sql = "SELECT * from users WHERE username = ?"
     db.get(sql,[username], function(err, data){
-        let token = jwt_generate.generateAccessToken(username) 
+        let token = jwt_generate.generateAccessToken(username,data.role) 
 
       if(username == data.username && hashed_password == data.password) {
           res.send(JSON.stringify({status: "Logged in", jwt:token}));
